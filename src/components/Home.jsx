@@ -10,11 +10,12 @@ function Home() {
 
     function addTopic(topic) {
         setData(prevData => [...prevData, topic]);
+        Data.push(topic);
     }
 
     function deleteTopic(id) {
-        setData(prevData=>{
-            return prevData.filter((topic, index)=>index!==id);
+        setData(prevData => {
+            return prevData.filter((topic, index) => index !== id);
         });
     }
 
@@ -25,8 +26,8 @@ function Home() {
     return (<>
         <CreateTopic onAdd={addTopic} />
         <div className="flex-container">
-            {data.map((tata, index) => <BasicCard
-                topicName={tata.topic}
+            {data.map((item, index) => <BasicCard
+                topicName={item.topic}
                 onEdit={editTopic}
                 onDelete={deleteTopic}
                 key={index}

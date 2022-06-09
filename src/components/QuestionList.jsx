@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React , { useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,11 +9,9 @@ import Paper from '@mui/material/Paper';
 import Data from './Data';
 import { useParams } from 'react-router-dom';
 import _ from 'lodash';
-import AddQuestion from './AddQuestion';
+import CreateQuestion from './CreateQuestion';
 
 
-
-// console.log(rows2);
 
 function BasicTable() {
     const params = useParams();
@@ -27,19 +25,27 @@ function BasicTable() {
     });
     console.log("index: ", ind);
 
-    function createData2(question, link, status, note) {
+    function createData(question, link, status, note) {
         return { question, link, status, note };
     }
-    const rows2 = [];
-    
+
+    const [rows, setRows] = useState(Data[ind].list);
+
     function myF(q) {
-        rows2.push(createData2(q.question, q.link, q.status, q.note));
+        setRows(prevItems => [...prevItems, createData(q.question, q.link, q.status, q.note)]);
     }
+
+
     Data[ind].list.forEach(myF);
+
+    function addQuestion(question) {
+        setRows(question);
+        Data[ind].list.push(question);
+    }
 
     return (
         <>
-            <AddQuestion index={ind}/>
+            <CreateQuestion index={ind} onAdd={addQuestion} />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
@@ -52,14 +58,9 @@ function BasicTable() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows2.map((row, index) => (
-                            <TableRow
-                                key={index}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                                <TableCell component="th" scope="row">
-                                    {index + 1}
-                                </TableCell>
+                        {rows.map((row, index) => (
+                            <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                <TableCell component="th" scope="row">{index + 1}</TableCell>
                                 <TableCell align="left">{row.question}</TableCell>
                                 <TableCell align="left"><a href={row.link} target="_blank" rel="noreferrer noopener">Click</a></TableCell>
                                 <TableCell align="left">{row.status}</TableCell>
@@ -71,7 +72,6 @@ function BasicTable() {
             </TableContainer>
         </>
     );
-
 }
 
 export default BasicTable;

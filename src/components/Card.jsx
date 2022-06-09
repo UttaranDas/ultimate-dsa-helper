@@ -2,15 +2,10 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-// import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-// import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
-// import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { useState } from "react";
-// import { TextField } from '@mui/material';
-// import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import _ from "lodash";
 
@@ -59,6 +54,3 @@ function BasicCard(props) {
 }
 
 export default BasicCard;
-
-{/* <EditOutlinedIcon style={{ color: '#f5ba13' }} /> */}
-{/* <DeleteOutlineRoundedIcon style={{ color: '#f5ba13' }} /> */}
