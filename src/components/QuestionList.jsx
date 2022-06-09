@@ -25,21 +25,12 @@ function BasicTable() {
     });
     console.log("index: ", ind);
 
-    function createData(question, link, status, note) {
-        return { question, link, status, note };
-    }
-
     const [rows, setRows] = useState(Data[ind].list);
 
-    function myF(q) {
-        setRows(prevItems => [...prevItems, createData(q.question, q.link, q.status, q.note)]);
-    }
-
-
-    Data[ind].list.forEach(myF);
-
     function addQuestion(question) {
-        setRows(question);
+        // setRows(question);
+
+        setRows(prevQuestion => [...prevQuestion, question]);
         Data[ind].list.push(question);
     }
 
