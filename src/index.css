@@ -12,6 +12,7 @@ body {
     float: left;
 }
 */
+
 .flex-container {
     display: flex;
     justify-content: center;
@@ -109,8 +110,8 @@ form {
     box-shadow: 0 1px 5px rgb(138, 137, 137);
 }
 
-@media only screen and (max-width: 600px) {
-    form{
+@media only screen and (max-width: 540px) {
+    form {
         width: auto;
     }
 }
@@ -139,4 +140,12 @@ form button {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     cursor: pointer;
     outline: none;
+}
+
+.browser-router {
+    min-height: calc(100vh - 4.351rem);
+}
+
+#error {
+    width: 30%;
 }

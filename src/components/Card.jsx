@@ -21,8 +21,7 @@ function BasicCard(props) {
     let navigate = useNavigate();
 
     function handleClick(event){
-        // navigate("./Back-tracking", {replace: false});
-        console.log("clicked", event);
+        
     }
 
     function go(){

@@ -1,4 +1,4 @@
-import React , { useState } from 'react';
+import React, { useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,12 +10,12 @@ import Data from './Data';
 import { useParams } from 'react-router-dom';
 import _ from 'lodash';
 import CreateQuestion from './CreateQuestion';
-
+import Error from './Error';
 
 
 function BasicTable() {
     const params = useParams();
-    console.log("params: ", params.topicName);
+
 
     const ind = Data.findIndex(element => {
         if (_.kebabCase(element.topic) === params.topicName) {
@@ -23,46 +23,47 @@ function BasicTable() {
         }
         return false;
     });
-    console.log("index: ", ind);
 
-    const [rows, setRows] = useState(Data[ind].list);
+    const [rows, setRows] = useState(ind === -1 ? [] : Data[ind].list);
 
-    function addQuestion(question) {
-        // setRows(question);
+    if (ind === -1) { return <Error />; }
+    else {
 
-        setRows(prevQuestion => [...prevQuestion, question]);
-        Data[ind].list.push(question);
-    }
+        function addQuestion(question) {
+            setRows(prevQuestion => [...prevQuestion, question]);
+            Data[ind].list.push(question);
+        }
 
-    return (
-        <>
-            <CreateQuestion index={ind} onAdd={addQuestion} />
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell align="left">Index</TableCell>
-                            <TableCell align="left">Questions</TableCell>
-                            <TableCell align="left">Links</TableCell>
-                            <TableCell align="left">Status</TableCell>
-                            <TableCell align="left">Note</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows.map((row, index) => (
-                            <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                <TableCell component="th" scope="row">{index + 1}</TableCell>
-                                <TableCell align="left">{row.question}</TableCell>
-                                <TableCell align="left"><a href={row.link} target="_blank" rel="noreferrer noopener">Click</a></TableCell>
-                                <TableCell align="left">{row.status}</TableCell>
-                                <TableCell align="left">{row.note}</TableCell>
+        return (
+            <>
+                <CreateQuestion index={ind} onAdd={addQuestion} />
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="left">Index</TableCell>
+                                <TableCell align="left">Questions</TableCell>
+                                <TableCell align="left">Links</TableCell>
+                                <TableCell align="left">Status</TableCell>
+                                <TableCell align="left">Note</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </>
-    );
+                        </TableHead>
+                        <TableBody>
+                            {rows.map((row, index) => (
+                                <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                    <TableCell component="th" scope="row">{index + 1}</TableCell>
+                                    <TableCell align="left">{row.question}</TableCell>
+                                    <TableCell align="left"><a href={row.link} target="_blank" rel="noreferrer noopener">Click</a></TableCell>
+                                    <TableCell align="left">{row.status}</TableCell>
+                                    <TableCell align="left">{row.note}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </>
+        );
+    }
 }
 
 export default BasicTable;
